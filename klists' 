@@ -1,0 +1,119 @@
+[1mdiff --git a/app/Http/routes.php b/app/Http/routes.php[m
+[1mindex 1ad3549..c839542 100644[m
+[1m--- a/app/Http/routes.php[m
+[1m+++ b/app/Http/routes.php[m
+[36m@@ -11,6 +11,5 @@[m
+ |[m
+ */[m
+ [m
+[31m-Route::get('/', function () {[m
+[31m-    return view('welcome');[m
+[31m-});[m
+[32m+[m[32mRoute::get('/', 'TasklistController@index');[m
+[32m+[m[32mRoute::resource('tasklist', 'TasklistController');[m
+[1mdiff --git a/composer.json b/composer.json[m
+[1mindex 2b8950d..a22fbf5 100644[m
+[1m--- a/composer.json[m
+[1m+++ b/composer.json[m
+[36m@@ -6,7 +6,8 @@[m
+     "type": "project",[m
+     "require": {[m
+         "php": ">=5.5.9",[m
+[31m-        "laravel/framework": "5.1.*"[m
+[32m+[m[32m        "laravel/framework": "5.1.*",[m
+[32m+[m[32m        "laravelcollective/html": "5.1.*"[m
+     },[m
+     "require-dev": {[m
+         "fzaninotto/faker": "~1.4",[m
+[1mdiff --git a/composer.lock b/composer.lock[m
+[1mindex 1a27079..4ec6874 100644[m
+[1m--- a/composer.lock[m
+[1m+++ b/composer.lock[m
+[36m@@ -4,7 +4,7 @@[m
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",[m
+         "This file is @generated automatically"[m
+     ],[m
+[31m-    "content-hash": "5bd58fd976f1ee3e9611bc37c006ec46",[m
+[32m+[m[32m    "content-hash": "5d22a10ef0e9bc3fa61e71aa29b24879",[m
+     "packages": [[m
+         {[m
+             "name": "classpreloader/classpreloader",[m
+[36m@@ -491,6 +491,56 @@[m
+             "time": "2017-03-24T16:31:45+00:00"[m
+         },[m
+         {[m
+[32m+[m[32m            "name": "laravelcollective/html",[m
+[32m+[m[32m            "version": "v5.1.9",[m
+[32m+[m[32m            "source": {[m
+[32m+[m[32m                "type": "git",[m
+[32m+[m[32m                "url": "https://github.com/LaravelCollective/html.git",[m
+[32m+[m[32m                "reference": "f62269629b2a1093039733517bd7e75b3f98dffb"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "dist": {[m
+[32m+[m[32m                "type": "zip",[m
+[32m+[m[32m                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/f62269629b2a1093039733517bd7e75b3f98dffb",[m
+[32m+[m[32m                "reference": "f62269629b2a1093039733517bd7e75b3f98dffb",[m
+[32m+[m[32m                "shasum": ""[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "require": {[m
+[32m+[m[32m                "illuminate/http": "5.1.*",[m
+[32m+[m[32m                "illuminate/routing": "5.1.*",[m
+[32m+[m[32m                "illuminate/session": "5.1.*",[m
+[32m+[m[32m                "illuminate/support": "5.1.*",[m
+[32m+[m[32m                "php": ">=5.5.9"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "require-dev": {[m
+[32m+[m[32m                "mockery/mockery": "~0.9",[m
+[32m+[m[32m                "phpunit/phpunit": "~4.0"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "type": "library",[m
+[32m+[m[32m            "autoload": {[m
+[32m+[m[32m                "psr-4": {[m
+[32m+[m[32m                    "Collective\\Html\\": "src/"[m
+[32m+[m[32m                },[m
+[32m+[m[32m                "files": [[m
+[32m+[m[32m                    "src/helpers.php"[m
+[32m+[m[32m                ][m
+[32m+[m[32m            },[m
+[32m+[m[32m            "notification-url": "https://packagist.org/downloads/",[m
+[32m+[m[32m            "license": [[m
+[32m+[m[32m                "MIT"[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            "authors": [[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "name": "Taylor Otwell",[m
+[32m+[m[32m                    "email": "taylorotwell@gmail.com"[m
+[32m+[m[32m                },[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "name": "Adam Engebretson",[m
+[32m+[m[32m                    "email": "adam@laravelcollective.com"[m
+[32m+[m[32m                }[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            "time": "2015-11-28T08:27:09+00:00"[m
+[32m+[m[32m        },[m
+[32m+[m[32m        {[m
+             "name": "league/flysystem",[m
+             "version": "1.0.39",[m
+             "source": {[m
+[1mdiff --git a/config/app.php b/config/app.php[m
+[1mindex 044f2a4..77ea47b 100644[m
+[1m--- a/config/app.php[m
+[1m+++ b/config/app.php[m
+[36m@@ -144,6 +144,8 @@[m [mreturn [[m
+         App\Providers\AuthServiceProvider::class,[m
+         App\Providers\EventServiceProvider::class,[m
+         App\Providers\RouteServiceProvider::class,[m
+[32m+[m[41m        [m
+[32m+[m[32m        Collective\Html\HtmlServiceProvider::class,[m
+ [m
+     ],[m
+ [m
+[36m@@ -192,6 +194,8 @@[m [mreturn [[m
+         'URL'       => Illuminate\Support\Facades\URL::class,[m
+         'Validator' => Illuminate\Support\Facades\Validator::class,[m
+         'View'      => Illuminate\Support\Facades\View::class,[m
+[32m+[m[32m        'Form' => Collective\Html\FormFacade::class,[m
+[32m+[m[32m        'Html' => Collective\Html\HtmlFacade::class,[m[41m        [m
+ [m
+     ],[m
+ [m
