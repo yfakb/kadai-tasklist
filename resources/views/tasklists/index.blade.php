@@ -13,4 +13,5 @@
 	</ul>
 @endif
 
+{!! link_to_route('tasklist.create', '新規タスクの投稿') !!}
 @endsection
