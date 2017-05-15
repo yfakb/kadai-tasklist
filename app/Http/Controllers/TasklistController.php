@@ -117,11 +117,11 @@ class TasklistController extends Controller
             'status' => 'required|max:10',
         ]);         
 
-        $request->user()->tasklists()->create([
-            'content' => $request->content,
-            'status' => $request->status
-        ]); 
-        
+
+        $tasklist = Tasklist::find($id);
+        $tasklist->content = $request->content;
+        $tasklist->status = $request->status;
+        $tasklist->save();
 
         return redirect('/');
     }
